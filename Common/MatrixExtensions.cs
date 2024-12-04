@@ -7,8 +7,8 @@ public static class MatrixExtensions
     public static bool Contains(this char[][] source, Point p) =>
         p.X >= 0 &&
         p.Y >= 0 &&
-        p.X < source[p.Y].Length &&
-        p.Y < source.Length;
+        p.Y < source.Length &&
+        p.X < source[p.Y].Length;
 
     public static IEnumerable<Point> Points(this char[][] source)
     {
