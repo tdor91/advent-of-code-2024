@@ -24,7 +24,7 @@ Console.WriteLine(result1);
 
 var result2 = orders
     .Where(order => !IsCorrectlyOrdered(order, ruleMap))
-    .Select(order => OrderCorrectly(order, ruleMap))
+    .Select(order => Reorder(order, ruleMap))
     .Select(order => order[order.Length / 2])
     .Sum();
 Console.WriteLine(result2);
@@ -48,7 +48,7 @@ bool IsCorrectlyOrdered(int[] order, Dictionary<int, List<int>> rules)
     return true;
 }
 
-int[] OrderCorrectly(int[] order, Dictionary<int, List<int>> rules)
+int[] Reorder(int[] order, Dictionary<int, List<int>> rules)
 {
     var result = new List<int>();
     var errors = new List<int>();
