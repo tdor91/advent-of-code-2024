@@ -3,7 +3,7 @@
 const string inputFile = @"input.txt";
 var lines = await File.ReadAllLinesAsync(inputFile);
 
-// Key = page, Value = pages that are not allowed _after_
+// Key = page, Value = pages that are not allowed _after_ the key
 var ruleMap = lines
     .Where(line => line.Contains('|'))
     .Select(line => line.Split('|'))
