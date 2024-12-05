@@ -3,17 +3,17 @@
 const string inputFile = @"input.txt";
 var lines = await File.ReadAllLinesAsync(inputFile);
 
+// Key = page, Value = pages that are not allowed _after_
 var ruleMap = lines
     .Where(line => line.Contains('|'))
     .Select(line => line.Split('|'))
-    .Select(parts => (int.Parse(parts[1]), int.Parse(parts[0]))) // reversed!
-    .GroupBy(rule => rule.Item1)
-    .ToDictionary(group => group.Key, group => group.Select(rule => rule.Item2).ToList());
+    .Select(parts => (int.Parse(parts[0]), int.Parse(parts[1])))
+    .GroupBy(rule => rule.Item2) // reversed!
+    .ToDictionary(group => group.Key, group => group.Select(rule => rule.Item1).ToList());
 
 var orders = lines
     .Where(line => line.Contains(','))
-    .Select(line => line.Split(','))
-    .Select(parts => parts.ToInts().ToArray())
+    .Select(line => line.Split(',').ToInts().ToArray())
     .ToArray();
 
 var result1 = orders
@@ -31,11 +31,11 @@ Console.WriteLine(result2);
 
 Console.WriteLine("done");
 
-bool IsCorrectlyOrdered(int[] order, Dictionary<int, List<int>> dictionary)
+bool IsCorrectlyOrdered(int[] order, Dictionary<int, List<int>> rules)
 {
     for (int i = 0; i < order.Length - 1; i++)
     {
-        if (ruleMap.TryGetValue(order[i], out var invalidSuccessors))
+        if (rules.TryGetValue(order[i], out var invalidSuccessors))
         {
             var remaining = order[(i + 1)..];
             if (remaining.Intersect(invalidSuccessors).Any())
@@ -48,7 +48,7 @@ bool IsCorrectlyOrdered(int[] order, Dictionary<int, List<int>> dictionary)
     return true;
 }
 
-int[] OrderCorrectly(int[] order, Dictionary<int, List<int>> dictionary)
+int[] OrderCorrectly(int[] order, Dictionary<int, List<int>> rules)
 {
     var result = new List<int>();
     var errors = new List<int>();
@@ -56,7 +56,7 @@ int[] OrderCorrectly(int[] order, Dictionary<int, List<int>> dictionary)
     for (int i = 0; i < order.Length; i++)
     {
         var remaining = order[(i + 1)..];
-        if (ruleMap.TryGetValue(order[i], out var invalidSuccessors)
+        if (rules.TryGetValue(order[i], out var invalidSuccessors)
             && remaining.Intersect(invalidSuccessors).Any())
         {
             errors.Add(order[i]);
