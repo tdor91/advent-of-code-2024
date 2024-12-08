@@ -4,18 +4,7 @@ const string inputFile = @"input.txt";
 var lines = await File.ReadAllLinesAsync(inputFile);
 var map = lines.Select(line => line.ToCharArray()).ToArray();
 
-Dictionary<char, List<Point>> antennas = new();
-foreach (var point in map.Points())
-{
-    var symbol = map.GetSymbol(point);
-    if (symbol == '.') continue;
-    
-    if (!antennas.TryGetValue(symbol, out var positions))
-    {
-        antennas[symbol] = positions = [];
-    }
-    positions.Add(point);
-}
+var antennas = ParseAntennaPositions(map); 
 
 HashSet<Point> uniqueAntinodes = [];
 foreach (var (_, positions) in antennas)
@@ -61,6 +50,25 @@ var result2 = uniqueAntinodes2.Count;
 Console.WriteLine(result2);
 
 Console.WriteLine("done");
+
+Dictionary<char, List<Point>> ParseAntennaPositions(char[][] matrix)
+{
+    Dictionary<char, List<Point>> result = new();
+
+    foreach (var point in matrix.Points())
+    {
+        var symbol = matrix.GetSymbol(point);
+        if (symbol == '.') continue;
+    
+        if (!result.TryGetValue(symbol, out var positions))
+        {
+            result[symbol] = positions = [];
+        }
+        positions.Add(point);
+    }
+    
+    return result;
+}
 
 IEnumerable<(Point A, Point B)> GetPairPermutations(List<Point> points)
 {
