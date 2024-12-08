@@ -8,7 +8,9 @@ public readonly record struct Point(int X, int Y)
 
     public Point Invert() => new(X * -1, Y * -1);
 
-    public (long X, long Y) DistanceTo(Point a) => (Math.Abs(X - a.X), Math.Abs(Y - a.Y));
+    public (long X, long Y) DistanceTo(Point other) => (Math.Abs(X - other.X), Math.Abs(Y - other.Y));
     
-    public Point CenterTo(Point a) => new((X + a.X) / 2, (Y + a.Y) / 2);
+    public Point PathTo(Point other) => new (other.X - X, other.Y - Y);
+    
+    public Point CenterTo(Point other) => new((X + other.X) / 2, (Y + other.Y) / 2);
 }
