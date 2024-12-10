@@ -9,13 +9,13 @@ var (files, spaces) = GetSections(input);
 var decoded = Decode(files, len);
 
 int?[] ordered = decoded.ToArray();
-var remainingFreeSpaces = spaces.Select(s => new Section(s.Index, s.Size)).ToList();
+var remainingFreeSpaces1 = spaces.Select(s => new Section(s.Index, s.Size)).ToList();
 for (int i = decoded.Length - 1; i >= 0; i--)
 {
     var id = decoded[i];
     if (id != null)
     {
-        var freeSpace = remainingFreeSpaces.FirstOrDefault(space => space.Size > 0);
+        var freeSpace = remainingFreeSpaces1.FirstOrDefault(space => space.Size > 0);
         if (freeSpace == default || freeSpace.Index > i)
         {
             break;
