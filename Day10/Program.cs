@@ -23,15 +23,8 @@ IEnumerable<Point> Hike(int[][] matrix, Point start, int lastValue)
 {
     var currentValue = matrix.GetValue(start);
 
-    if (currentValue - lastValue != 1)
-    {
-        return [];
-    }
-
-    if (currentValue == 9)
-    {
-        return [start];
-    }
+    if (currentValue - lastValue != 1) return [];
+    if (currentValue == 9) return [start];
 
     return new[] { start.Add(0, 1), start.Add(0, -1), start.Add(1, 0), start.Add(-1, 0) }
         .Where(matrix.Contains)
