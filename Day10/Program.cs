@@ -17,8 +17,6 @@ Console.WriteLine(result1);
 var result2 = trailHeads.Values.Select(top => top.Count()).Sum();
 Console.WriteLine(result2);
 
-Console.WriteLine("done");
-
 IEnumerable<Point> Hike(int[][] matrix, Point start, int lastValue)
 {
     var currentValue = matrix.GetValue(start);
