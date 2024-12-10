@@ -8,7 +8,7 @@ var len = input.Select(c => (long)char.GetNumericValue(c)).Sum();
 var (files, spaces) = GetSections(input);
 var decoded = Decode(files, len);
 
-int?[] ordered = decoded.ToArray();
+int?[] ordered1 = decoded.ToArray();
 var remainingFreeSpaces1 = spaces.Select(s => new Section(s.Index, s.Size)).ToList();
 for (int i = decoded.Length - 1; i >= 0; i--)
 {
@@ -20,13 +20,13 @@ for (int i = decoded.Length - 1; i >= 0; i--)
         {
             break;
         }
-        ordered[freeSpace.Index] = id;
-        ordered[i] = null;
+        ordered1[freeSpace.Index] = id;
+        ordered1[i] = null;
         freeSpace.Index++;
         freeSpace.Size--;
     }
 }
-var checksum1 = ordered.TakeWhile(id => id != null).Select((v, i) => (long)i * v).Sum();
+var checksum1 = ordered1.TakeWhile(id => id != null).Select((v, i) => (long)i * v).Sum();
 Console.WriteLine(checksum1);
 
 int?[] ordered2 = decoded.ToArray();
