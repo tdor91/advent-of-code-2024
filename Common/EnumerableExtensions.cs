@@ -8,7 +8,7 @@ public static class EnumerableExtensions
     }
 
     public static IEnumerable<int> ToInts(this IEnumerable<string> source) => source.Select(int.Parse);
-    
+
     public static IEnumerable<T> WithoutAt<T>(this IEnumerable<T> source, int index)
     {
         int i = 0;

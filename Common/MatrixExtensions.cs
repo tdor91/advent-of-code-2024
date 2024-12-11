@@ -4,20 +4,22 @@ public static class MatrixExtensions
 {
     public static char GetSymbol(this char[][] source, Point p) => source[p.Y][p.X];
 
-    public static bool Contains(this char[][] source, Point p) =>
+    public static T GetValue<T>(this T[][] source, Point p) => source[p.Y][p.X];
+
+    public static bool Contains<T>(this T[][] source, Point p) =>
         p.X >= 0 &&
         p.Y >= 0 &&
         p.Y < source.Length &&
         p.X < source[p.Y].Length;
 
-    public static IEnumerable<Point> Points(this char[][] source)
+    public static IEnumerable<Point> Points<T>(this T[][] source)
     {
         for (int y = 0; y < source.Length; y++)
         for (int x = 0; x < source[y].Length; x++)
             yield return new(x, y);
     }
 
-    public static void Print(this char[][] source)
+    public static void Print<T>(this T[][] source)
     {
         for (int y = 0; y < source.Length; y++)
         {
