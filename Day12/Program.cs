@@ -11,9 +11,9 @@ foreach (var point in input.Points())
     if (visited.Contains(point)) continue;
 
     var symbol = input.GetSymbol(point);
-    var group = Expand(input, point, symbol, visited).ToArray();
-    regions.Add(new Region(symbol, group));
-    visited.UnionWith(group);
+    var points = Expand(input, point, symbol, visited).ToArray();
+    regions.Add(new Region(symbol, points));
+    visited.UnionWith(points);
 }
 
 var result1 = regions.Select(region => region.CalculatePrice()).Sum();
@@ -48,19 +48,9 @@ class Region(char symbol, Point[] points)
 
     public Point[] Points { get; } = points;
 
-    public int CalculatePrice()
-    {
-        var area = Points.Length;
-        var perimeter = GetPerimeter();
-        return area * perimeter;
-    }
+    public int CalculatePrice() => Points.Length * GetPerimeter();
 
-    public int CalculateDiscountedPrice()
-    {
-        var area = Points.Length;
-        var sides = GetSides();
-        return area * sides;
-    }
+    public int CalculateDiscountedPrice() => Points.Length * GetSides();
 
     private int GetPerimeter()
     {
@@ -73,32 +63,18 @@ class Region(char symbol, Point[] points)
         return perimeter;
     }
 
-    private IEnumerable<Point> GetNeighbours(Point point)
-    {
-        foreach (var other in Points)
-        {
-            if (Math.Abs(other.X - point.X) == 1 && other.Y == point.Y ||
-                Math.Abs(other.Y - point.Y) == 1 && other.X == point.X)
-            {
-                yield return other;
-            }
-        }
-    }
+    private IEnumerable<Point> GetNeighbours(Point point) =>
+        Points.Where(other =>
+            (Math.Abs(other.X - point.X) == 1 && other.Y == point.Y) ||
+            (Math.Abs(other.Y - point.Y) == 1 && other.X == point.X));
 
-    private bool AreAdjacent(Direction direction, Point a, Point b)
-    {
-        if (direction is Direction.Top or Direction.Bottom)
+    private bool AreAdjacent(Direction direction, Point a, Point b) =>
+        direction switch
         {
-            return a.Y == b.Y && Math.Abs(a.X - b.X) == 1;
-        }
-
-        if (direction is Direction.Left or Direction.Right)
-        {
-            return a.X == b.X && Math.Abs(a.Y - b.Y) == 1;
-        }
-
-        throw new ArgumentException("Invalid direction");
-    }
+            Direction.Top or Direction.Bottom => a.Y == b.Y && Math.Abs(a.X - b.X) == 1,
+            Direction.Left or Direction.Right => a.X == b.X && Math.Abs(a.Y - b.Y) == 1,
+            _ => throw new ArgumentException("Invalid direction")
+        };
 
     private int GetSides()
     {
@@ -107,7 +83,7 @@ class Region(char symbol, Point[] points)
         var edgeGroups = edges
             .GroupBy(e => e.Direction)
             .ToDictionary(
-                g => g.Key, 
+                g => g.Key,
                 g => g.OrderBy(e => e.Pos.X).ThenBy(e => e.Pos.Y).ToList());
 
         int sides = 0;
@@ -124,10 +100,10 @@ class Region(char symbol, Point[] points)
                 knownEdges.Add(edge.Pos);
             }
         }
-        
+
         return sides;
     }
-    
+
     private IEnumerable<(Point Pos, Direction Direction)> GetEdgeDirections(Point point)
     {
         if (!Points.Contains(point.Add(1, 0))) yield return (point, Direction.Right);
