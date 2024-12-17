@@ -51,7 +51,7 @@ long FindInputForOutput(Computer computer, int[] program)
             if (remaining.SequenceEqual(current))
             {
                 // if the option resulted in the complete sequence, a solution is found
-                if (pos == program.Length)
+                if (current.Count == program.Length)
                 {
                     return option;
                 }
