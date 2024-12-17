@@ -42,7 +42,7 @@ bool ProbablyHasChristmasTree(IEnumerable<Robot> robots, int width, int height, 
     {
         matrix[robot.Position.Y][robot.Position.X] = '#';
     }
-
+    
     if (matrix.Select(row => new string(row)).Any(row => row.Contains("#########")))
     {
         // break here: check the output for a christmas tree
