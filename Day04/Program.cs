@@ -12,8 +12,7 @@ Point[] diagonalDirections =
 ];
 
 const string inputFile = @"input.txt";
-var lines = await File.ReadAllLinesAsync(inputFile);
-var input = lines.Select(line => line.ToCharArray()).ToArray();
+var input = await MatrixExtensions.Parse(inputFile);
 
 var result1 = input.Points()
     .Where(point => input.GetSymbol(point) == 'X')

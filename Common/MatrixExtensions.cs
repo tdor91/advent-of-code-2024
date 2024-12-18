@@ -53,4 +53,10 @@ public static class MatrixExtensions
             yield return new string(chars);
         }
     }
+
+    public static async Task<char[][]> Parse(string filePath)
+    {
+        var lines = await File.ReadAllLinesAsync(filePath);
+        return lines.Select(line => line.ToCharArray()).ToArray();
+    }
 }

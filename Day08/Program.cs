@@ -1,8 +1,7 @@
 ﻿using Common;
 
 const string inputFile = @"input.txt";
-var lines = await File.ReadAllLinesAsync(inputFile);
-var map = lines.Select(line => line.ToCharArray()).ToArray();
+var map = await MatrixExtensions.Parse(inputFile);
 
 var antennas = ParseAntennaPositions(map); 
 
