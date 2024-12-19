@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Common;
+﻿using Common;
 
 const int size = 70;
 const string inputFile = @"input.txt";
