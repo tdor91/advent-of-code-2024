@@ -51,7 +51,7 @@ Console.WriteLine($"{result2.X},{result2.Y}");
         {
             if (n.Position == target) return (true, n);
 
-            if (!shortestPaths.ContainsKey(n.Key) || n.AccumulatedCost < shortestPaths[n.Key].AccumulatedCost) // relaxed
+            if (!shortestPaths.ContainsKey(n.Key) || n.AccumulatedCost < shortestPaths[n.Key].AccumulatedCost)
             {
                 shortestPaths[n.Key] = n;
                 queue.Enqueue(n, n.AccumulatedCost);
