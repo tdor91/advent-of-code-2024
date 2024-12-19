@@ -14,7 +14,6 @@ var result1 = endNode.AccumulatedCost;
 Console.WriteLine(result1);
 
 var lastPossibleIndex = 0;
-var range = 0..(obstacles.Length - 1);
 int from = 0, to = obstacles.Length;
 while (from < to)
 {
