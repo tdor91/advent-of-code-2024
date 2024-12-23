@@ -16,6 +16,8 @@ public readonly record struct Point(int X, int Y)
 
     public (int X, int Y) DistanceTo(Point other) => (Math.Abs(X - other.X), Math.Abs(Y - other.Y));
 
+    public int ManhattanDistanceTo(Point other) => Math.Abs(X - other.X) + Math.Abs(Y - other.Y);
+    
     public Point PathTo(Point other) => new (other.X - X, other.Y - Y);
 
     public Point CenterTo(Point other) => new((X + other.X) / 2, (Y + other.Y) / 2);
