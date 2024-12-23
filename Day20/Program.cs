@@ -1,14 +1,13 @@
-﻿using System.Diagnostics;
-using Common;
+﻿using Common;
 
 const string inputFile = @"input.txt";
-Stopwatch sw = Stopwatch.StartNew();
 var input = await MatrixExtensions.Parse(inputFile);
 var start = input.Points().First(p => input.GetSymbol(p) == 'S');
 var end = input.Points().First(p => input.GetSymbol(p) == 'E');
 
-var pathFindingResult = PathFinding.FindShortestPath(start, end, node => node.GetNeighbours(input));
-var path = pathFindingResult.EndNode.ReconstructPath().Select(n => n.Position).ToArray().AsReadOnly();
+var path = PathFinding
+    .FindShortestPath(start, end, node => node.GetNeighbours(input))
+    .EndNode.ReconstructPath().Select(n => n.Position).ToArray().AsReadOnly();
 
 const int minimumSaving = 100;
 
@@ -22,9 +21,7 @@ foreach (var (shortcutFrom, fromIndex) in path.Select((p, i) => (p, i)))
 
     result1 += shortcutsTo.Count(x => SavedSteps(fromIndex, x.ToIndex, 2) >= minimumSaving);
 }
-
 Console.WriteLine(result1);
-Console.WriteLine($"Elapsed total time: {sw.ElapsedMilliseconds}ms");
 
 long result2 = 0;
 foreach (var (shortcutFrom, fromIndex) in path.Select((p, i) => (p, i)))
@@ -37,9 +34,6 @@ foreach (var (shortcutFrom, fromIndex) in path.Select((p, i) => (p, i)))
 
     result2 += shortcutsTo.Count(x => SavedSteps(fromIndex, x.ToIndex, x.Steps) >= minimumSaving);
 }
-
 Console.WriteLine(result2);
-Console.WriteLine($"Elapsed total time: {sw.ElapsedMilliseconds}ms");
-Console.WriteLine("done");
 
 int SavedSteps(int from, int to, int steps) => to - from - steps;
