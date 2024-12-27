@@ -21,4 +21,6 @@ public static class EnumerableExtensions
             i++;
         }
     }
+
+    public static string ToJoinedString(this IEnumerable<string> source, string separator = ",") => string.Join(separator, source);
 }
