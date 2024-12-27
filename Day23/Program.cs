@@ -11,12 +11,12 @@ foreach (var (first, others) in links)
 {
     foreach (var second in links[first])
     {
-        var intersection = links[first].Intersect(links[second]).ToList();
+        var intersection = links[first].Intersect(links[second]);
         foreach (var third in intersection)
         {
             List<string> list = [first, second, third];
             list.Sort();
-            groupsWith3.Add(list.ToJoinedString());
+            groupsWith3.Add(list.AsString());
         }
     }
 }
@@ -25,7 +25,7 @@ Console.WriteLine(result1);
 
 var cliques = FindAllMaximalCliques(r: [], p: [.. links.Keys], x: [], links);
 var maxClique = cliques.MaxBy(c => c.Length);
-var result2 = maxClique!.OrderBy(c => c).ToJoinedString();
+var result2 = maxClique!.OrderBy(c => c).AsString();
 Console.WriteLine(result2);
 
 // Bron-Kerbosch's algorithm

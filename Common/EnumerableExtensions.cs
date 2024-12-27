@@ -22,5 +22,5 @@ public static class EnumerableExtensions
         }
     }
 
-    public static string ToJoinedString(this IEnumerable<string> source, string separator = ",") => string.Join(separator, source);
+    public static string AsString(this IEnumerable<string> source, string separator = ",") => string.Join(separator, source);
 }
