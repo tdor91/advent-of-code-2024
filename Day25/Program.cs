@@ -17,9 +17,6 @@ foreach (var @lock in locks)
 }
 Console.WriteLine(result1);
 
-
-Console.WriteLine("done");
-
 (List<Key> keys, List<Lock> locks) ParseInput(string[] lines)
 {
     List<Key> keys = [];
